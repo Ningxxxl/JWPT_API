@@ -1,11 +1,9 @@
 package cn.ningxy.api;
 
 import cn.ningxy.bean.User;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.io.IOException;
 
 /**
  * @Author: ningxy
@@ -28,6 +26,11 @@ public class JWPT_Evaluate {
     public String getUserFromForm(@FormParam("username") String username, @FormParam("pwd") String password) {
         User user = new User(username, password);
         System.out.println(user.toString());
+
+
+
+
+
         return user.toString();
     }
 
