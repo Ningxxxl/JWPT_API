@@ -15,7 +15,7 @@
     <form action="/api/login/jwpt/evaluate" method="post">
         <input type="text" name="username" id="username">
         <input type="password" name="pwd" id="pwd">
-        <input type="text" name="captcha" id="captcha">
+        <input type="text" name="captchaCode" id="captchaCode">
         <input type="submit">
     </form>
 </div>
