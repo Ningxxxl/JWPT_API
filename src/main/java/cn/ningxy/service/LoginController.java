@@ -1,4 +1,4 @@
-package cn.ningxy.test;
+package cn.ningxy.service;
 
 import cn.ningxy.bean.User;
 import com.gargoylesoftware.htmlunit.BrowserVersion;

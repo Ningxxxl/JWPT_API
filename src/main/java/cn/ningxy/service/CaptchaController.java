@@ -1,5 +1,6 @@
-package cn.ningxy.test;
+package cn.ningxy.service;
 
+import cn.ningxy.util.RandomUtil;
 import com.gargoylesoftware.htmlunit.*;
 import com.gargoylesoftware.htmlunit.util.Cookie;
 
@@ -36,7 +37,7 @@ public class CaptchaController {
         webClient.getCookieManager().setCookiesEnabled(true);                   // 设置cookies
     }
 
-    public void getCaptcha(){
+    public void getCaptcha() {
         try {
             WebRequest request = new WebRequest(new URL(CAPTCHA_URL));
             request.setHttpMethod(HttpMethod.GET);
@@ -46,7 +47,8 @@ public class CaptchaController {
             // 通过res创建输入流
             InputStream is = res.getContentAsStream();
             // 通过输入流写入文件并保存
-            saveImg(is, "img_" + "abc" + ".png");
+            String filename = RandomUtil.getRandomFileName("img_", ".jpeg");
+            saveImg(is, filename);
 
             // 获取cookies
             cookies = webClient.getCookieManager().getCookies();

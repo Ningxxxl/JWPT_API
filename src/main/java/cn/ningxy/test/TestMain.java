@@ -1,6 +1,8 @@
 package cn.ningxy.test;
 
 import cn.ningxy.bean.User;
+import cn.ningxy.service.CaptchaController;
+import cn.ningxy.service.LoginController;
 
 import java.util.Scanner;
 
