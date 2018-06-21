@@ -14,7 +14,7 @@ import java.util.Set;
 
 /**
  * @Author: ningxy
- * @Description:
+ * @Description: 登录控制器
  * @Date: 2018-06-20 22:20
  **/
 public class LoginController {
@@ -69,6 +69,13 @@ public class LoginController {
                 '}';
     }
 
+    /**
+    * @Author: ningxy
+    * @Description: 登录
+    * @params: []
+    * @return: boolean
+    * @Date: 2018/6/21 上午9:44
+    */
     public boolean doLogin() {
         WebClient webClient = new WebClient(BrowserVersion.CHROME);
 
@@ -111,6 +118,13 @@ public class LoginController {
         return loginRes;
     }
 
+    /**
+    * @Author: ningxy
+    * @Description: 填充表单
+    * @params: [htmlPage]
+    * @return: void
+    * @Date: 2018/6/21 上午9:44
+    */
     private void fillForm(HtmlPage htmlPage) {
 
         HtmlForm form = htmlPage.getForms().get(0);                     // 获取第0个form
@@ -122,6 +136,13 @@ public class LoginController {
         inputByCaptcha.setValueAttribute(captchaCode);                  // 设置验证码
     }
 
+    /**
+    * @Author: ningxy
+    * @Description: 检查登录结果
+    * @params: [htmlPage]
+    * @return: boolean
+    * @Date: 2018/6/21 上午9:44
+    */
     private boolean checkLoginStatus(HtmlPage htmlPage) {
 
         Document document = Jsoup.parse(htmlPage.asXml());

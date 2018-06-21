@@ -16,7 +16,7 @@ import java.util.Set;
 
 /**
  * @Author: ningxy
- * @Description:
+ * @Description: 评教控制器
  * @Date: 2018-06-21 08:59
  **/
 public class EvaluateController {
@@ -28,6 +28,13 @@ public class EvaluateController {
         this.cookies = cookies;
     }
 
+    /**
+    * @Author: ningxy
+    * @Description: 进行评教
+    * @params: []
+    * @return: void
+    * @Date: 2018/6/21 上午9:38
+    */
     public void evaluate() {
         final String[] alertInfo = new String[1];
         WebClient webClient = new WebClient();
@@ -92,6 +99,13 @@ public class EvaluateController {
 
     }
 
+    /**
+    * @Author: ningxy
+    * @Description: 从HTML中解析问卷列表
+    * @params: [htmlPage]
+    * @return: java.util.List<cn.ningxy.bean.Questionnaire>
+    * @Date: 2018/6/21 上午9:42
+    */
     private List<Questionnaire> parseHtml(HtmlPage htmlPage) {
         List<Questionnaire> list = new ArrayList<>();
         Document document = Jsoup.parse(htmlPage.asXml());
@@ -115,6 +129,13 @@ public class EvaluateController {
         return list;
     }
 
+    /**
+    * @Author: ningxy
+    * @Description: 填充表单
+    * @params: [htmlPage]
+    * @return: void
+    * @Date: 2018/6/21 上午9:43
+    */
     private void fillForm(HtmlPage htmlPage) {
         HtmlForm form = htmlPage.getFormByName("StDaForm");
 
@@ -130,11 +151,25 @@ public class EvaluateController {
         textArea.setText("讲课生动，表达优秀，很喜欢这个老师，好评!!!");
     }
 
+    /**
+    * @Author: ningxy
+    * @Description: 提交表单
+    * @params: [htmlPage]
+    * @return: com.gargoylesoftware.htmlunit.html.HtmlPage
+    * @Date: 2018/6/21 上午9:43
+    */
     private HtmlPage submitForm(HtmlPage htmlPage) throws Exception {
         DomElement submitButton = (DomElement) htmlPage.getByXPath("//img[@onclick='check()']").get(0);
         return submitButton.click();
     }
 
+    /**
+    * @Author: ningxy
+    * @Description: 检查评教结果
+    * @params: [alertText]
+    * @return: boolean
+    * @Date: 2018/6/21 上午9:43
+    */
     private boolean isEvaluateSuccess(String alertText) {
         return "评估成功！".equals(alertText);
     }

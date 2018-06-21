@@ -4,6 +4,7 @@ import cn.ningxy.util.RandomUtil;
 import com.gargoylesoftware.htmlunit.*;
 import com.gargoylesoftware.htmlunit.util.Cookie;
 
+import javax.ws.rs.Produces;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -12,7 +13,7 @@ import java.util.Set;
 
 /**
  * @Author: ningxy
- * @Description:
+ * @Description: 验证码控制器，包含获取验证码和cookie
  * @Date: 2018-06-20 21:51
  **/
 public class CaptchaController {
@@ -37,6 +38,13 @@ public class CaptchaController {
         webClient.getCookieManager().setCookiesEnabled(true);                   // 设置cookies
     }
 
+    /**
+    * @Author: ningxy
+    * @Description:
+    * @params: []
+    * @return: void
+    * @Date: 2018/6/21 上午9:36
+    */
     public void getCaptcha() {
         try {
             WebRequest request = new WebRequest(new URL(CAPTCHA_URL));
@@ -59,6 +67,13 @@ public class CaptchaController {
         }
     }
 
+    /**
+    * @Author: ningxy
+    * @Description: 保存图像到本地
+    * @params: [is, fileName]
+    * @return: void
+    * @Date: 2018/6/21 上午9:37
+    */
     private static void saveImg(InputStream is, String fileName) {
         //创建文件的目录结构
         File files = new File(FILE_PATH);
