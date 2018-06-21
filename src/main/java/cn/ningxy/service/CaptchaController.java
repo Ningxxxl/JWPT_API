@@ -3,12 +3,14 @@ package cn.ningxy.service;
 import cn.ningxy.util.RandomUtil;
 import com.gargoylesoftware.htmlunit.*;
 import com.gargoylesoftware.htmlunit.util.Cookie;
+import net.sf.json.JSONArray;
 
 import javax.ws.rs.Produces;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Set;
 
 /**
@@ -20,7 +22,8 @@ public class CaptchaController {
 
     private WebClient webClient;
     private Set<Cookie> cookies;
-    private static final String FILE_PATH = "./img/captcha/";
+    private String captchaImgFileName;
+    private static final String FILE_PATH = "/Users/ningxy/Desktop/img/captcha/";
     private static final String CAPTCHA_URL = "http://jwpt.tjpu.edu.cn/validateCodeAction.do";
 
     public CaptchaController() {
@@ -55,8 +58,8 @@ public class CaptchaController {
             // 通过res创建输入流
             InputStream is = res.getContentAsStream();
             // 通过输入流写入文件并保存
-            String filename = RandomUtil.getRandomFileName("img_", ".jpeg");
-            saveImg(is, filename);
+            captchaImgFileName = RandomUtil.getRandomFileName("img_", ".jpeg");
+            saveImg(is, captchaImgFileName);
 
             // 获取cookies
             cookies = webClient.getCookieManager().getCookies();
@@ -91,6 +94,8 @@ public class CaptchaController {
             is.close();
             out.close();
             System.out.println("验证码保存成功");
+            System.out.println(file.exists());
+            System.out.println(file.getAbsolutePath());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -109,4 +114,7 @@ public class CaptchaController {
         return CAPTCHA_URL;
     }
 
+    public String getCaptchaImgFileName() {
+        return captchaImgFileName;
+    }
 }
