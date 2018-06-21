@@ -4,16 +4,13 @@ import cn.ningxy.bean.User;
 import cn.ningxy.service.CaptchaController;
 import cn.ningxy.service.EvaluateController;
 import cn.ningxy.service.LoginController;
-import cn.ningxy.test.TestMain;
+import cn.ningxy.util.Image;
 import com.gargoylesoftware.htmlunit.util.Cookie;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.io.File;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Set;
 
 /**
@@ -58,13 +55,24 @@ public class JWPT_Evaluate {
     @Produces(MediaType.APPLICATION_JSON)
     public String getCaptcha() {
         JSONObject returnJSON = new JSONObject();
-        JSONArray cookiesArray = new JSONArray();
+        int respondStatus = 404;
+        String respondMessage = "NULL";
+        JSONObject dataJson = new JSONObject();
 
         CaptchaController captchaController = new CaptchaController();
         captchaController.getCaptcha();
+        Set<Cookie> cookies = captchaController.getCookies();
+        String captchaImg = Image.GetImageStr(captchaController.getFileURL());
+        System.out.println(captchaImg);
+        dataJson.put("cookie", cookies);
+        dataJson.put("captchaImg", captchaImg.replace("\n",""));
+        System.out.println(dataJson);
+
+        String CaptchaFileUrl = captchaController.getFileURL();
+
 
 //        cookiesArray = captchaController.getCookiesJsonArray();
-        System.out.println(cookiesArray.toString());
+//        System.out.println(cookiesArray.toString());
         System.out.println(captchaController.getCaptchaImgFileName());
         return captchaController.getCaptchaImgFileName();
     }

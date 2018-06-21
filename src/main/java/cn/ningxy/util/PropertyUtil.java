@@ -20,13 +20,13 @@ public class PropertyUtil {
 
     synchronized static private void loadProps() {
         System.out.println(System.getProperty("user.dir"));
-        System.out.println();
+        System.out.println("asd》"+new File("").getAbsolutePath());
         String projectSrc = System.getProperty("user.dir");
         System.out.println("开始加载properties文件内容.......");
         props = new Properties();
         InputStream in = null;
         try {
-            in = new FileInputStream("src/jwpt.properties");
+            in = new FileInputStream("/WEB-INF/jwpt.properties");
             props.load(in);
         } catch (FileNotFoundException e) {
             e.printStackTrace();

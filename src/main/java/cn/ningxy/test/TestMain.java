@@ -5,6 +5,7 @@ import cn.ningxy.service.CaptchaController;
 import cn.ningxy.service.EvaluateController;
 import cn.ningxy.service.LoginController;
 import cn.ningxy.util.CookieUtil;
+import cn.ningxy.util.Image;
 import com.gargoylesoftware.htmlunit.util.Cookie;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -21,12 +22,6 @@ import java.util.Set;
  * @Date: 2018-06-20 23:15
  **/
 public class TestMain {
-
-    public static void aaa() {
-        CaptchaController captchaController = new CaptchaController();
-        captchaController.getCaptcha();
-        System.out.println(captchaController.getCaptchaImgFileName());
-    }
     public static void main(String[] args) {
         LoginController loginController = new LoginController();
         CaptchaController captchaController = new CaptchaController();
@@ -43,6 +38,7 @@ public class TestMain {
             System.out.println(cookie);
         }
 
+        System.out.println(Image.GetImageStr("/Users/ningxy/Desktop/img/captcha/img_3116720180621.jpeg"));
         Scanner cin = new Scanner(System.in);
         String code = cin.nextLine();
 

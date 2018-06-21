@@ -24,8 +24,8 @@ public class CaptchaController {
     private WebClient webClient;
     private Set<Cookie> cookies;
     private String captchaImgFileName;
-//    private static final String FILE_PATH = "/Users/ningxy/Desktop/img/captcha/";
-    private static final String FILE_PATH = PropertyUtil.getProperty("CAPTCHA_SAVE_PATH");
+    private static final String FILE_PATH = "/Users/ningxy/Desktop/img/captcha/";
+//    private static final String FILE_PATH = PropertyUtil.getProperty("CAPTCHA_SAVE_PATH");
     private static final String CAPTCHA_URL = "http://jwpt.tjpu.edu.cn/validateCodeAction.do";
 
     public CaptchaController() {
@@ -51,6 +51,7 @@ public class CaptchaController {
     * @Date: 2018/6/21 上午9:36
     */
     public void getCaptcha() {
+
         try {
             WebRequest request = new WebRequest(new URL(CAPTCHA_URL));
             request.setHttpMethod(HttpMethod.GET);
@@ -107,6 +108,8 @@ public class CaptchaController {
     public Set<Cookie> getCookies() {
         return cookies;
     }
+
+    public String getFileURL() { return FILE_PATH + captchaImgFileName; };
 
     public static String getFilePath() {
         return FILE_PATH;
