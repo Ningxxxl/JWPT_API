@@ -9,6 +9,7 @@ import com.gargoylesoftware.htmlunit.util.Cookie;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import java.io.File;
 import java.net.CookieHandler;
 import java.util.Date;
 import java.util.Scanner;

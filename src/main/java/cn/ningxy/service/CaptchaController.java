@@ -1,5 +1,6 @@
 package cn.ningxy.service;
 
+import cn.ningxy.util.PropertyUtil;
 import cn.ningxy.util.RandomUtil;
 import com.gargoylesoftware.htmlunit.*;
 import com.gargoylesoftware.htmlunit.util.Cookie;
@@ -23,7 +24,8 @@ public class CaptchaController {
     private WebClient webClient;
     private Set<Cookie> cookies;
     private String captchaImgFileName;
-    private static final String FILE_PATH = "/Users/ningxy/Desktop/img/captcha/";
+//    private static final String FILE_PATH = "/Users/ningxy/Desktop/img/captcha/";
+    private static final String FILE_PATH = PropertyUtil.getProperty("CAPTCHA_SAVE_PATH");
     private static final String CAPTCHA_URL = "http://jwpt.tjpu.edu.cn/validateCodeAction.do";
 
     public CaptchaController() {
