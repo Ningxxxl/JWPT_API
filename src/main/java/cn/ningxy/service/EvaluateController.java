@@ -11,7 +11,6 @@ import org.jsoup.select.Elements;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -87,8 +86,8 @@ public class EvaluateController {
         } finally {
             webClient.close();
             System.out.println("评教结束");
-            System.out.printf("共评教[%d]门课程", numTot);
-            System.out.printf("评教成功[%d]门课程", numOK);
+            System.out.printf("总共评教[%d]门课程\n", numTot);
+            System.out.printf("评教成功[%d]门课程\n", numOK);
         }
 
     }

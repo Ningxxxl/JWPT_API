@@ -2,6 +2,7 @@ package cn.ningxy.test;
 
 import cn.ningxy.bean.User;
 import cn.ningxy.service.CaptchaController;
+import cn.ningxy.service.EvaluateController;
 import cn.ningxy.service.LoginController;
 
 import java.util.Scanner;
@@ -26,6 +27,10 @@ public class TestMain {
         loginController.setCookies(captchaController.getCookies());
         loginController.setCaptchaCode(code);
 
-        System.out.println(loginController.doLogin());
+        loginController.doLogin();
+
+        EvaluateController evaluateController = new EvaluateController(loginController.getCookies());
+        evaluateController.evaluate();
+
     }
 }
