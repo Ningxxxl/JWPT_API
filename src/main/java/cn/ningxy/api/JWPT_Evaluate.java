@@ -20,7 +20,7 @@ import java.util.Set;
  * @Description:
  * @Date: 2018-06-20 00:02
  **/
-@Path("/login")
+@Path("/")
 public class JWPT_Evaluate {
 
     @GET
@@ -30,20 +30,20 @@ public class JWPT_Evaluate {
     }
 
     /**
-    * @Author: ningxy
-    * @Description: 接收登录的信息和cookie进行评教
-    * @params: [username, password, code, cooky]
-    * @return: javax.ws.rs.core.Response
-    * @Date: 2018/6/22 下午1:28
-    */
+     * @Author: ningxy
+     * @Description: 接收登录的信息和cookie进行评教
+     * @params: [username, password, code, cooky]
+     * @return: javax.ws.rs.core.Response
+     * @Date: 2018/6/22 下午1:28
+     */
     @POST
     @Path("/evaluate")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.TEXT_PLAIN)
     public Response doEvaluate(@FormParam("username") String username, @FormParam("pwd") String password,
-                                  @FormParam("captchaCode") String code, @FormParam("cookieForm") String cooky) {
+                               @FormParam("captchaCode") String code, @FormParam("cookieForm") String cooky) {
         Set<Cookie> cookies = CookieUtil.jsonArrayToSet(JSONArray.fromObject(cooky));
-        for(Cookie cookie : cookies) {
+        for (Cookie cookie : cookies) {
             System.out.println(cookie);
         }
         User user = new User(username, password);
@@ -62,12 +62,12 @@ public class JWPT_Evaluate {
     }
 
     /**
-    * @Author: ningxy
-    * @Description: 获取验证码
-    * @params: []
-    * @return: javax.ws.rs.core.Response
-    * @Date: 2018/6/22 下午1:30
-    */
+     * @Author: ningxy
+     * @Description: 获取验证码
+     * @params: []
+     * @return: javax.ws.rs.core.Response
+     * @Date: 2018/6/22 下午1:30
+     */
     @GET
     @Path("/evaluate/captcha")
 //    @Consumes(MediaType.TEXT_PLAIN)
@@ -97,7 +97,7 @@ public class JWPT_Evaluate {
         returnJSON.put("data", dataJson);
 
         System.out.println(returnJSON);
-        return Response.status(200).entity(returnJSON.toString()).build();
+        return Response.status(200).entity("jsonp" + "(" + returnJSON.toString() + ")").build();
     }
 
 }
