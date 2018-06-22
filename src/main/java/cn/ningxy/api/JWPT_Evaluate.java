@@ -37,7 +37,7 @@ public class JWPT_Evaluate {
     * @Date: 2018/6/22 下午1:28
     */
     @POST
-    @Path("/jwpt/evaluate")
+    @Path("/evaluate")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.TEXT_PLAIN)
     public Response doEvaluate(@FormParam("username") String username, @FormParam("pwd") String password,
@@ -69,7 +69,7 @@ public class JWPT_Evaluate {
     * @Date: 2018/6/22 下午1:30
     */
     @GET
-    @Path("/jwpt/evaluate/captcha")
+    @Path("/evaluate/captcha")
 //    @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.TEXT_PLAIN)
     public Response getCaptcha() {
