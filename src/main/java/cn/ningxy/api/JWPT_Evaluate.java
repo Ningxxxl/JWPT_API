@@ -29,11 +29,18 @@ public class JWPT_Evaluate {
         return "JWPT/login";
     }
 
+    /**
+    * @Author: ningxy
+    * @Description: 接收登录的信息和cookie进行评教
+    * @params: [username, password, code, cooky]
+    * @return: javax.ws.rs.core.Response
+    * @Date: 2018/6/22 下午1:28
+    */
     @POST
     @Path("/jwpt/evaluate")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    public String getUserFromForm(@FormParam("username") String username, @FormParam("pwd") String password,
+    public Response doEvaluate(@FormParam("username") String username, @FormParam("pwd") String password,
                                   @FormParam("captchaCode") String code, @FormParam("cookieForm") String cooky) {
         Set<Cookie> cookies = CookieUtil.jsonArrayToSet(JSONArray.fromObject(cooky));
         for(Cookie cookie : cookies) {
@@ -44,14 +51,23 @@ public class JWPT_Evaluate {
         loginController.setUser(user);
         loginController.setCookies(cookies);
         loginController.setCaptchaCode(code);
-//
+
         loginController.doLogin();
-//
+
         EvaluateController evaluateController = new EvaluateController(loginController.getCookies());
         evaluateController.evaluate();
-        return user.toString();
+
+        JSONObject returnJSON = evaluateController.getEvaluateResultJsonObj();
+        return Response.status(200).entity(returnJSON.toString()).build();
     }
 
+    /**
+    * @Author: ningxy
+    * @Description: 获取验证码
+    * @params: []
+    * @return: javax.ws.rs.core.Response
+    * @Date: 2018/6/22 下午1:30
+    */
     @GET
     @Path("/jwpt/evaluate/captcha")
 //    @Consumes(MediaType.TEXT_PLAIN)

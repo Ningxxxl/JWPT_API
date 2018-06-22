@@ -4,11 +4,13 @@ import cn.ningxy.bean.Questionnaire;
 import com.gargoylesoftware.htmlunit.*;
 import com.gargoylesoftware.htmlunit.html.*;
 import com.gargoylesoftware.htmlunit.util.Cookie;
+import net.sf.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import javax.ws.rs.GET;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,7 @@ public class EvaluateController {
 
     private Set<Cookie> cookies;
     private static final String URL_COURSE_LIST = "http://jwpt.tjpu.edu.cn/jxpgXsAction.do?oper=listWj";
+    private JSONObject evaluateResultJsonObj;
 
     public EvaluateController(Set<Cookie> cookies) {
         this.cookies = cookies;
@@ -55,15 +58,17 @@ public class EvaluateController {
             webClient.getCookieManager().addCookie(cooky);
         }
 
-        int numTot = 0;
-        int numOK = 0;
+        int numAll = 0; // 列表中一共有的课程数量
+        int numTot = 0; // 未评教的课程数量
+        int numOK = 0;  // 评教成功的课程数量
 
         try {
             WebRequest request = new WebRequest(new URL(URL_COURSE_LIST));
             request.setHttpMethod(HttpMethod.GET);
             HtmlPage evaluateListPage = webClient.getPage(request);
             List<Questionnaire> list = parseHtml(evaluateListPage);
-            System.out.println("检测到共有[" + list.size() + "]门课程");
+            numAll = list.size();
+            System.out.println("检测到共有[" + numAll + "]门课程");
 
             for (Questionnaire questionnaire : list) {
                 if (questionnaire.isEvaluated()) continue;   // 如果已经被评教则跳过
@@ -97,6 +102,26 @@ public class EvaluateController {
             System.out.printf("评教成功[%d]门课程\n", numOK);
         }
 
+        setEvaluateResultJsonObj(numAll, numTot, numOK);
+
+    }
+
+    /**
+    * @Author: ningxy
+    * @Description: 构造评教结果JSON对象
+    * @params: [numAll, numTot, numOK]
+    * @return: void
+    * @Date: 2018/6/22 下午1:23
+    */
+    private void setEvaluateResultJsonObj(int numAll, int numTot, int numOK) {
+        evaluateResultJsonObj = new JSONObject();
+        evaluateResultJsonObj.put("numAll", numAll);
+        evaluateResultJsonObj.put("numTot", numTot);
+        evaluateResultJsonObj.put("numOK", numOK);
+    }
+
+    public JSONObject getEvaluateResultJsonObj() {
+        return evaluateResultJsonObj;
     }
 
     /**
