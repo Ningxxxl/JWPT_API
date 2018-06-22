@@ -20,7 +20,7 @@ public class CaptchaController {
     private WebClient webClient;
     private Set<Cookie> cookies;
     private String captchaImgFileName;
-    private static final String FILE_PATH = "/Users/ningxy/Desktop/img/captcha/";
+    private static final String FILE_PATH = "/JWPT_Captcha/";
     private static final String CAPTCHA_URL = "http://jwpt.tjpu.edu.cn/validateCodeAction.do";
 
     public CaptchaController() {
