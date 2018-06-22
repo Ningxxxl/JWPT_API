@@ -1,17 +1,13 @@
 package cn.ningxy.service;
 
-import cn.ningxy.util.PropertyUtil;
 import cn.ningxy.util.RandomUtil;
 import com.gargoylesoftware.htmlunit.*;
 import com.gargoylesoftware.htmlunit.util.Cookie;
-import net.sf.json.JSONArray;
 
-import javax.ws.rs.Produces;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Set;
 
 /**
@@ -25,7 +21,6 @@ public class CaptchaController {
     private Set<Cookie> cookies;
     private String captchaImgFileName;
     private static final String FILE_PATH = "/Users/ningxy/Desktop/img/captcha/";
-//    private static final String FILE_PATH = PropertyUtil.getProperty("CAPTCHA_SAVE_PATH");
     private static final String CAPTCHA_URL = "http://jwpt.tjpu.edu.cn/validateCodeAction.do";
 
     public CaptchaController() {
@@ -44,42 +39,37 @@ public class CaptchaController {
     }
 
     /**
-    * @Author: ningxy
-    * @Description:
-    * @params: []
-    * @return: void
-    * @Date: 2018/6/21 上午9:36
-    */
-    public void getCaptcha() {
+     * @Author: ningxy
+     * @Description:
+     * @params: []
+     * @return: void
+     * @Date: 2018/6/21 上午9:36
+     */
+    public void getCaptcha() throws Exception {
 
-        try {
-            WebRequest request = new WebRequest(new URL(CAPTCHA_URL));
-            request.setHttpMethod(HttpMethod.GET);
-            // 这个是带着cookie获取的单独的验证码页面
-            Page page = webClient.getPage(request);
-            WebResponse res = page.getWebResponse();
-            // 通过res创建输入流
-            InputStream is = res.getContentAsStream();
-            // 通过输入流写入文件并保存
-            captchaImgFileName = RandomUtil.getRandomFileName("img_", ".jpeg");
-            saveImg(is, captchaImgFileName);
+        WebRequest request = new WebRequest(new URL(CAPTCHA_URL));
+        request.setHttpMethod(HttpMethod.GET);
+        // 这个是带着cookie获取的单独的验证码页面
+        Page page = webClient.getPage(request);
+        WebResponse res = page.getWebResponse();
+        // 通过res创建输入流
+        InputStream is = res.getContentAsStream();
+        // 通过输入流写入文件并保存
+        captchaImgFileName = RandomUtil.getRandomFileName("img_", ".jpeg");
+        saveImg(is, captchaImgFileName);
 
-            // 获取cookies
-            cookies = webClient.getCookieManager().getCookies();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            webClient.close();
-        }
+        // 获取cookies
+        cookies = webClient.getCookieManager().getCookies();
+        webClient.close();
     }
 
     /**
-    * @Author: ningxy
-    * @Description: 保存图像到本地
-    * @params: [is, fileName]
-    * @return: void
-    * @Date: 2018/6/21 上午9:37
-    */
+     * @Author: ningxy
+     * @Description: 保存图像到本地
+     * @params: [is, fileName]
+     * @return: void
+     * @Date: 2018/6/21 上午9:37
+     */
     private static void saveImg(InputStream is, String fileName) {
         //创建文件的目录结构
         File files = new File(FILE_PATH);
@@ -97,8 +87,6 @@ public class CaptchaController {
             is.close();
             out.close();
             System.out.println("验证码保存成功");
-            System.out.println(file.exists());
-            System.out.println(file.getAbsolutePath());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -109,7 +97,9 @@ public class CaptchaController {
         return cookies;
     }
 
-    public String getFileURL() { return FILE_PATH + captchaImgFileName; };
+    public String getFileURL() {
+        return FILE_PATH + captchaImgFileName;
+    }
 
     public static String getFilePath() {
         return FILE_PATH;
