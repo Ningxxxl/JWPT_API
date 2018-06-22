@@ -58,7 +58,7 @@ public class JWPT_Evaluate {
         evaluateController.evaluate();
 
         JSONObject returnJSON = evaluateController.getEvaluateResultJsonObj();
-        return Response.status(200).entity(returnJSON.toString()).build();
+        return Response.status(200).entity("jsonp" + "(" + returnJSON.toString() + ")").build();
     }
 
     /**
