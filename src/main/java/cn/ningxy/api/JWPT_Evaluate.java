@@ -39,7 +39,7 @@ public class JWPT_Evaluate {
     @POST
     @Path("/jwpt/evaluate")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
     public Response doEvaluate(@FormParam("username") String username, @FormParam("pwd") String password,
                                   @FormParam("captchaCode") String code, @FormParam("cookieForm") String cooky) {
         Set<Cookie> cookies = CookieUtil.jsonArrayToSet(JSONArray.fromObject(cooky));
@@ -86,6 +86,7 @@ public class JWPT_Evaluate {
             dataJson.put("captchaImg", captchaImg.replace("\n", ""));
             respondStatus = 200;
             respondMessage = "OK";
+            Image.deleteFile(captchaController.getFileURL());
         } catch (Exception e) {
             respondStatus = 500;
             respondMessage = "Server Error";

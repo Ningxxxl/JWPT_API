@@ -115,6 +115,7 @@ public class EvaluateController {
     */
     private void setEvaluateResultJsonObj(int numAll, int numTot, int numOK) {
         evaluateResultJsonObj = new JSONObject();
+        evaluateResultJsonObj.put("result", numTot == numOK);
         evaluateResultJsonObj.put("numAll", numAll);
         evaluateResultJsonObj.put("numTot", numTot);
         evaluateResultJsonObj.put("numOK", numOK);
