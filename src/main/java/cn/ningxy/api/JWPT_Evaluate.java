@@ -58,7 +58,10 @@ public class JWPT_Evaluate {
         evaluateController.evaluate();
 
         JSONObject returnJSON = evaluateController.getEvaluateResultJsonObj();
-        return Response.status(200).entity("jsonp" + "(" + returnJSON.toString() + ")").build();
+        return Response.status(200).entity(returnJSON.toString())
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+                .allow("OPTIONS").build();
     }
 
     /**
@@ -72,7 +75,7 @@ public class JWPT_Evaluate {
     @Path("/evaluate/captcha")
 //    @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.TEXT_PLAIN)
-    public Response getCaptcha() {
+    public Response captcha() {
         JSONObject returnJSON = new JSONObject();
         int respondStatus = 404;
         String respondMessage = "NULL";
@@ -96,8 +99,8 @@ public class JWPT_Evaluate {
         returnJSON.put("message", respondMessage);
         returnJSON.put("data", dataJson);
 
-        System.out.println(returnJSON);
-        return Response.status(200).entity("jsonp" + "(" + returnJSON.toString() + ")").build();
+//        System.out.println(returnJSON);response.setHeader("Access-Control-Allow-Origin","*");
+        return Response.status(200).header("Access-Control-Allow-Origin","*").entity("jsonp" + "(" + returnJSON.toString() + ")").build();
     }
 
 }
