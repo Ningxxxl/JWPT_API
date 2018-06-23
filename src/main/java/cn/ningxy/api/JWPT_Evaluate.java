@@ -26,7 +26,7 @@ public class JWPT_Evaluate {
     @GET
     @Produces("text/plain")
     public String getMessage() {
-        return "JWPT/login";
+        return "JWPT/evaluate";
     }
 
     /**
