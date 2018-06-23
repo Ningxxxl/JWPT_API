@@ -99,7 +99,6 @@ public class JWPT_Evaluate {
         returnJSON.put("message", respondMessage);
         returnJSON.put("data", dataJson);
 
-//        System.out.println(returnJSON);response.setHeader("Access-Control-Allow-Origin","*");
         return Response.status(200).header("Access-Control-Allow-Origin","*").entity("jsonp" + "(" + returnJSON.toString() + ")").build();
     }
 
